@@ -3,7 +3,7 @@ const bodyParser = require('body-parser');
 const Task = require('./models/Task');
 const TaskList = require('./models/TaskList');
 const app = express();
-const port = 8080
+const port = process.env.PORT || 3000
 
 // set the setting to ejs
 app.set('views', './views');
@@ -12,13 +12,24 @@ app.set('view engine', 'ejs');
 // middleware to read the request body
 app.use(bodyParser.urlencoded({ extended: true }));
 
+// setting a public folder for our static files 
+app.use(express.static('public'));
+
+// created a task list to hold tasks
+const list = new TaskList();
+
 // render  index page 
 app.get('/', (req, res) => {
     res.render('index', { tasks: list.tasks });
 
 });
-// created a task list to hold tasks
-const list = new TaskList();
+
+// render update task page
+app.get("/update/:id", (req, res) => {
+    const id = req.params.id;
+    res.render('updateTask', { tasks: list.tasks[id] })
+})
+
 
 // render add task form page
 app.get('/addTask', (req, res) => {
@@ -27,24 +38,33 @@ app.get('/addTask', (req, res) => {
 
 
 app.post('/addTask', (req, res) => {
-    // const { title, description, isComplete } = req.body
-
     const task = new Task(req.body.title, req.body.description);
     list.addTask(task);
     console.log(list);
     res.redirect('/');
 });
 
-app.get("/tasks/:id", (req, res) => {
+app.post('/delete/:id', (req, res) => {
     const id = req.params.id;
-    res.render('index', { tasks: list.tasks[id] })
+    list.deleteTask(id);
+    res.redirect('/');
 })
-// // manipulating data the user sends in post request
-// // request body is a sent as string so we want to parse the data using middleware
-// app.post('/addTask', (req, res) => {
-//     const task = new Task(req.body.taskName, req.body.description)
-//     tasks.push(task);
-// })
+
+app.post('/complete/:id', (req, res) => {
+    const id = req.params.id;
+    list.markComplete(id);
+    res.redirect('/');
+})
+
+
+app.post('/update/:id', (req, res) => {
+    const id = req.params.id;
+    const { title, description } = req.body;
+    list.updateTask(id, title, description);
+    console.log(list);
+    res.redirect('/');
+});
+
 
 
 app.listen(port, () => {

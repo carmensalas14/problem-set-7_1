@@ -22,14 +22,13 @@ class TaskList {
         this.count = 0;
     }
 
-    updateTask(id, newName, newDescription) {
-        this.tasks[id].name = newName;
+    updateTask(id, newTitle, newDescription) {
+        this.tasks[id].title = newTitle;
         this.tasks[id].description = newDescription;
-        return this.tasks[id];
     }
+
     markComplete(id) {
         this.tasks[id].isComplete = true;
-        return this.tasks[id].isComplete
     }
 }
 

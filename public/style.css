@@ -1,0 +1,21 @@
+body {
+    background-color: pink;
+    font-family: 'Merriweather', serif;
+
+}
+
+input {
+    font-size: 20px;
+    font-family: 'Merriweather', serif;
+
+}
+
+h1,
+nav,
+main {
+    /* Flex Properties */
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    align-items: center;
+}

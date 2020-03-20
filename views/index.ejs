@@ -5,22 +5,39 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="/style.css" type="text/css" />
+    <link href="https://fonts.googleapis.com/css?family=Merriweather&display=swap" rel="stylesheet">
     <title>To-Do List</title>
 </head>
 
 <body>
     <%- include('./partials/header.ejs')%>
         <main>
-            <ol>
+            <ul>
                 <% for(let id in tasks){ %>
                     <li>
                         <%= tasks[id].title %>
                             <%= tasks[id].description %>
-                                <%= tasks[id].isComplete %>
+                                <% if(tasks[id].isComplete == true){ %>
+                                    <p>complete</p>
+                                    <% } else{%>
+                                        <p>incomplete</p>
+                                        <%}%>
                     </li>
-                    <button>Completed</button>
+                    <form action="/complete/<%=id%>" method="post">
+                        <input type="submit" value="Complete Task">
+                    </form>
+
+                    <form action="/update/<%=id%>" method="get">
+                        <input type="submit" value="Update Task">
+                    </form>
+
+                    <form action="/delete/<%=id%>" method="post">
+                        <input type="submit" value="Delete Task">
+                    </form>
                     <% } %>
-            </ol>
+
+            </ul>
         </main>
 
 </body>
