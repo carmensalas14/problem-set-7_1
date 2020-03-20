@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Add Task</title>
+</head>
+
+<body>
+    <%- include('./partials/header.ejs')%>
+
+        <main>
+            <h1>Add a Task</h1>
+            <form action="/addTask" method="post">
+                <fieldset>
+                    <label for="title">Task Title</label>
+                    <input id="title" type="text" name="title">
+
+                    <label for="description">Task Description</label>
+                    <textarea name="description" id="description"></textarea>
+
+                    <input type="submit" value="Add Task" />
+                </fieldset>
+            </form>
+
+
+        </main>
+
+</body>
+
+</html>
